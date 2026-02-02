@@ -46,7 +46,7 @@ Add `data-topnav` to a header element for a full-width top navigation bar. The s
 ```html
 <body data-sidebar-layout>
   <nav data-topnav>
-    <button data-sidebar-toggle aria-label="Toggle menu">☰</button>
+    <button data-sidebar-toggle aria-label="Toggle menu" class="outline">☰</button>
     <span>App Name</span>
   </nav>
 
