@@ -1,5 +1,5 @@
 # oat - Build System
-# Requires: esbuild
+# Requires: esbuild, brotli
 
 .PHONY: dist css js clean size publish
 
@@ -32,6 +32,7 @@ css:
 	@cat $(CSS_FILES) > dist/oat.css
 	@esbuild dist/oat.css --minify --outfile=dist/oat.min.css
 	@gzip -9 -k -f dist/oat.min.css
+	@brotli -9 -k -f dist/oat.min.css
 	@cp dist/oat.min.css docs/static/oat.min.css
 	@echo "CSS: $$(wc -c < dist/oat.min.css | tr -d ' ') bytes (minified)"
 
@@ -40,6 +41,7 @@ js:
 	@cat src/js/base.js src/js/tabs.js src/js/dropdown.js src/js/toast.js src/js/tooltip.js src/js/sidebar.js > dist/oat.js
 	@esbuild dist/oat.js --minify --outfile=dist/oat.min.js
 	@gzip -9 -k -f dist/oat.min.js
+	@brotli -9 -k -f dist/oat.min.js
 	@cp dist/oat.min.js docs/static/oat.min.js
 	@echo "JS: $$(wc -c < dist/oat.min.js | tr -d ' ') bytes (minified)"
 
@@ -52,10 +54,12 @@ size:
 	@echo "CSS (src):   $$(wc -c < dist/oat.css | tr -d ' ') bytes"
 	@echo "CSS (min):   $$(wc -c < dist/oat.min.css | tr -d ' ') bytes"
 	@echo "CSS (gzip):  $$(wc -c < dist/oat.min.css.gz | tr -d ' ') bytes"
+	@echo "CSS (br):    $$(wc -c < dist/oat.min.css.br | tr -d ' ') bytes"
 	@echo ""
 	@echo "JS (src):    $$(wc -c < dist/oat.js | tr -d ' ') bytes"
 	@echo "JS (min):    $$(wc -c < dist/oat.min.js | tr -d ' ') bytes"
 	@echo "JS (gzip):   $$(wc -c < dist/oat.min.js.gz | tr -d ' ') bytes"
+	@echo "JS (br):     $$(wc -c < dist/oat.min.js.br | tr -d ' ') bytes"
 
 publish: clean dist
 	@cp -r src/css dist/css
