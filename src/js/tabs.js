@@ -55,26 +55,19 @@ class OtTabs extends OtBase {
   }
 
   onkeydown(e) {
-    const { key } = e;
     const idx = this.activeIndex;
-    let newIdx = idx;
+    const len = this.#tabs.length;
 
-    switch (key) {
-      case 'ArrowLeft':
-        e.preventDefault();
-        newIdx = idx - 1;
-        if (newIdx < 0) newIdx = this.#tabs.length - 1;
-        break;
-      case 'ArrowRight':
-        e.preventDefault();
-        newIdx = (idx + 1) % this.#tabs.length;
-        break;
-      default:
-        return;
+    const next = {
+      ArrowLeft: (idx - 1 + len) % len,
+      ArrowRight: (idx + 1) % len
+    }[e.key];
+
+    if (next != null) {
+      e.preventDefault();
+      this.#activate(next);
+      this.#tabs[next].focus();
     }
-
-    this.#activate(newIdx);
-    this.#tabs[newIdx].focus();
   }
 
   #activate(idx) {

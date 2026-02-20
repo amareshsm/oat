@@ -23,9 +23,6 @@ class OtBase extends HTMLElement {
     this.init();
   }
 
-  // Override in WebComponent subclasses for init logic.
-  init() {}
-
   // Called when element is removed from DOM.
   disconnectedCallback() {
     this.cleanup();
@@ -49,20 +46,6 @@ class OtBase extends HTMLElement {
       cancelable: true,
       detail
     }));
-  }
-
-  // Get boolean attribute value.
-  getBool(name) {
-    return this.hasAttribute(name);
-  }
-
-  // Set or remove boolean attribute.
-  setBool(name, value) {
-    if (value) {
-      this.setAttribute(name, '');
-    } else {
-      this.removeAttribute(name);
-    }
   }
 
   // Query selector within this element.

@@ -57,27 +57,17 @@ class OtDropdown extends OtBase {
 
     const items = this.$$('[role="menuitem"]');
     const idx = items.indexOf(e.target);
+    const len = items.length;
+    const next = {
+      ArrowDown: (idx + 1) % len,
+      ArrowUp: (idx - 1 + len) % len,
+      Home: 0,
+      End: len - 1
+    }[e.key];
 
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        items[(idx + 1) % items.length]?.focus();
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        items[idx - 1 < 0 ? items.length - 1 : idx - 1]?.focus();
-        break;
-      case 'Home':
-        e.preventDefault();
-        items[0]?.focus();
-        break;
-      case 'End':
-        e.preventDefault();
-        items[items.length - 1]?.focus();
-        break;
-      case 'Escape':
-        this.#menu.hidePopover();
-        break;
+    if (next != null) {
+      e.preventDefault();
+      items[next].focus();
     }
   }
 
