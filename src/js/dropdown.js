@@ -16,6 +16,7 @@ class OtDropdown extends OtBase {
   #menu;
   #trigger;
   #position;
+  #items;
 
   init() {
     this.#menu = this.$('[popover]');
@@ -43,10 +44,12 @@ class OtDropdown extends OtBase {
       this.#position();
       window.addEventListener('scroll', this.#position, true);
       window.addEventListener('resize', this.#position);
-      this.$('[role="menuitem"]')?.focus();
+      this.#items = this.$$('[role="menuitem"]');
+      this.#items[0]?.focus();
       this.#trigger.ariaExpanded = 'true';
     } else {
       this.cleanup();
+      this.#items = null;
       this.#trigger.ariaExpanded = 'false';
       this.#trigger.focus();
     }
@@ -55,10 +58,9 @@ class OtDropdown extends OtBase {
   onkeydown(e) {
     if (!e.target.matches('[role="menuitem"]')) return;
 
-    const items = this.$$('[role="menuitem"]');
-    const idx = items.indexOf(e.target);
-    const next = this.keyNav(e, idx, items.length, 'ArrowUp', 'ArrowDown', true);
-    if (next >= 0) items[next].focus();
+    const idx = this.#items.indexOf(e.target);
+    const next = this.keyNav(e, idx, this.#items.length, 'ArrowUp', 'ArrowDown', true);
+    if (next >= 0) this.#items[next].focus();
   }
 
   cleanup() {
