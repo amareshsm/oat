@@ -69,3 +69,16 @@ Oat styles semantic HTML elements by default. No classes needed for basic stylin
 </body>
 </html>
 ```
+
+--------
+
+# Local dev setup
+
+### Requirements
+- [zola](https://github.com/getzola/zola/releases) static site generator installed to preview the docs/demo site and to try out changes.
+- [esbuild](https://esbuild.github.io/) installed for bundling+minifying JS and CSS.
+
+### Running
+- Clone the [oat repo](https://github.com/knadh/oat)
+- `cd docs` and run `zola serve` to access the docs/demo site at http://localhost:1111
+- After changing any CSS or JS files, run `make dist`. The demo site auto-updates with the changes.
